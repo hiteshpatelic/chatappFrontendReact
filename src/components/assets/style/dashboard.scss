@@ -1,0 +1,70 @@
+@import '../variable/varable.scss';
+
+body{
+    margin: 0;
+    font-family: $roboto;
+}
+h1, h2, h3, h4, h5, h6,p{
+    margin: 0;
+}
+button{
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    
+}
+input:focus{
+    outline: none;
+}
+a{
+    text-decoration: none;
+}
+.link{
+    color: black;
+}
+
+@mixin flex($justify, $align) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .box {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.5);  
+    }
+}
+
+
+.dashboard{
+    height: 100vh;
+    width: 100vw;
+    @include flex(center, center);
+    background-color: $secondaryColor;
+    background-image: url('https://picsum.photos/1920/1080');
+    
+    // background-image: linear-gradient( 135deg, $secondaryColor 10%, $primaryColor 100%);
+    .box{
+        min-width: 90%;
+        min-height: 90%;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: 350px auto;
+        backdrop-filter:  blur(10px);
+        .sidebar{
+            background-color: rgba(255, 255, 255, 0.486);
+            border-radius: 10px;
+        }
+        .welcome{
+            @include flex(center, center);
+            .container{
+                width: 90%;
+                height: 90%;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.849);
+            }
+        }
+    }
+}

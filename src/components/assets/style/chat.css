@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300&display=swap");
+.container-welcome {
+  text-align: center;
+  font-family: "Rajdhani", sans-serif;
+}
+
+.container-welcome h1 {
+  font-weight: lighter;
+  letter-spacing: 1px;
+  font-size: 92px;
+  font-weight: 900;
+}
+
+.container-welcome h2 {
+  font-size: 50px;
+  text-transform: capitalize;
+}
+
+.container-welcome p {
+  margin-top: 35px;
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+  opacity: 0.7;
+}
+/*# sourceMappingURL=chat.css.map */
