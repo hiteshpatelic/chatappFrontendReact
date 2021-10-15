@@ -6,7 +6,8 @@ import passwordComplexity  from "joi-password-complexity";
 import socket from "../../../socket/config"
 import { errorToster, successToster } from "../../layouts/toster";
 import { Link, useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import {setAuthToken} from '../../../redux/actions/auth'
 
 const Login = () => {
   const [number, setNumber] = useState("");
@@ -14,6 +15,8 @@ const Login = () => {
   const [error, seterror] = useState({})
   const [displayError, setdisplayError] = useState("none")
   let history = useHistory();
+  const dispatch = useDispatch();
+
 
 
   socket.off("res").on('res', res=>{
@@ -24,7 +27,9 @@ const Login = () => {
           }
           if(!data.error){
             successToster(data.message)
-            history.push("/chat/home")
+            localStorage.setItem('token', data.token);
+            dispatch(setAuthToken(data.token))
+            history.push("/chat")
           }
       }
   })

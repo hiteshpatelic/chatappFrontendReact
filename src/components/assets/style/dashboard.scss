@@ -37,6 +37,13 @@ a{
     }
 }
 
+@mixin btn($height, $width) {
+    @include flex(center, center);
+    background-color: #ffffff00;
+    height: $height;
+    width: $width;
+    transition: 0.2s;
+} 
 
 .dashboard{
     height: 100vh;
@@ -54,8 +61,31 @@ a{
         grid-template-columns: 350px auto;
         backdrop-filter:  blur(10px);
         .sidebar{
-            background-color: rgba(255, 255, 255, 0.486);
+            background-color: rgba(255, 255, 255, 0.651);
             border-radius: 10px;
+            display: grid;
+            grid-template-rows: 90px 1fr 55px;
+            .inline{
+
+                i{
+                    margin-right: 20px;
+                }
+                button{
+                    @include btn(40px, 150px);
+                    border: 0.5px solid $primaryColor;
+                    font-weight: 900;
+                }
+                button:hover{
+                    background-color: $secondaryColor;
+                }
+
+                border-top: 0.5px solid $primaryColor;
+                padding: 20px;
+                @include flex(space-between, center);
+                .fas{
+                    cursor: pointer;
+                }
+            }
         }
         .welcome{
             @include flex(center, center);
@@ -64,6 +94,41 @@ a{
                 height: 90%;
                 border-radius: 10px;
                 background-color: rgba(255, 255, 255, 0.849);
+            }
+        }.addContect{
+            padding: 25px;
+            backdrop-filter:  blur(10px);
+            background-color: #ffffff5e;
+            border-radius: 5px;
+            width: 300px;
+            h3{
+                margin-bottom: 20px;
+                border-bottom: 0.5px solid $primaryColor;
+                padding-bottom: 5px;
+                color: $primaryColor;
+            }
+            .input{
+                margin: 15px 0;
+                label{
+                    font-size: 12px;
+                }
+                input{
+                    width: 82%;
+                    margin: 5px 0;
+                    background-color: #ffffff00;
+                    padding: 10px 25px;
+                    border: 0.5px solid $primaryColor;
+                }
+            }
+            button{
+                @include btn(40px, 100%);
+                background-color: $primaryColor;
+                border: 0.5px solid #ffffff00;
+
+            }
+            button:hover {
+                background-color: $secondaryColor;
+                border: 0.5px solid $primaryColor;
             }
         }
     }

@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Fragment } from "react/cjs/react.production.min";
 import IMG from "../components/img";
 import Logo from "./logo";
+import Option from "./option";
 
 
 const data = [
@@ -34,7 +35,7 @@ const ContactList = () => {
         <div className="left">
           <IMG link={e.img}></IMG>
         </div>
-        <div className="detail" onClick={()=> history.push(`/chat/${e.usreId}`)}>
+        <div className="detail" onClick={()=> history.push(`/chat/chat/${e.usreId}`)}>
             <h3>{e.name}</h3>
             <p>{e.lastMessage}</p>
         </div>
@@ -51,6 +52,7 @@ const Sidebar = () => {
       <div className="contactList">
         <ContactList  />
       </div>
+      <Option/>      
     </Fragment>
   );
 };
