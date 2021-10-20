@@ -8,6 +8,7 @@ import { errorToster, successToster } from "../../layouts/toster";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {setAuthToken} from '../../../redux/actions/auth'
+import { fetchUserProfile } from "../../../redux/actions/profile";
 
 const Login = () => {
   const [number, setNumber] = useState("");
@@ -28,11 +29,24 @@ const Login = () => {
           if(!data.error){
             successToster(data.message)
             localStorage.setItem('token', data.token);
+            const eventdata = {
+              eventName: "getUserProfileInfo",
+              token: data.token
+            } 
+            socket.emit('req', eventdata )
             dispatch(setAuthToken(data.token))
-            history.push("/chat")
+            
           }
       }
+      socket.off('res').on("res", res=>{
+        const {eventName,data} = res
+        if(eventName === "getUserProfileInfo"){
+          dispatch(fetchUserProfile(data))
+          history.push("/chat")
+        }
+      })
   })
+
  
   const inputHandler = (e) =>{
     const {name, value} = e.target

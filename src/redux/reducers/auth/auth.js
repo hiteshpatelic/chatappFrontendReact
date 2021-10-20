@@ -1,14 +1,14 @@
 
 import { actionTypes } from "../../constants";
 const initialState = {
-    auth: []
+    auth: {}
 }
 
 const authReducer = (state = initialState, {type,payload}) => {
     switch (type) {
         case actionTypes.SET_TOKEN:
 
-            return {...state, auth:{token:payload}};
+            return {auth:{token:payload}};
           
         case actionTypes.REOVE_TOKEN:
             return state;

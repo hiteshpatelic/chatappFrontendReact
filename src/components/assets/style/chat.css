@@ -23,4 +23,10 @@
   font-size: 25px;
   opacity: 0.7;
 }
+
+.container-welcome img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
 /*# sourceMappingURL=chat.css.map */
