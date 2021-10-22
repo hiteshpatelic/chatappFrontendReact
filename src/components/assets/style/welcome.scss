@@ -108,6 +108,16 @@
             button:hover{
                 background-color: $primaryColor;
             }
+            .image{
+                @include flex(center, center);
+                img{
+                    height: 100px;
+                    width: 100px;
+                    border-radius: 50%;
+                    @include flex(center, center);
+                }
+                
+            }
         }
     }
 }

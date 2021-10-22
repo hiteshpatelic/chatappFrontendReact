@@ -15,8 +15,8 @@ const Register = () =>{
     const [password, setPassword] = useState("");
     const [error, seterror] = useState({})
     const [displayError, setdisplayError] = useState("none")
+    const [profilePicture, setprofilePicture] = useState({})
     let history = useHistory()
-
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
@@ -36,19 +36,29 @@ const Register = () =>{
             }
         }
     })
+    
 
     const inputHandler = (e) =>{
         const {name, value} = e.target
         if(name === "username") setusername(value)
         if(name === "number") setNumber(value)
         if(name === "password") setPassword(value)
+        if(name === "profilePicture") {
+            if(e.target.files[0]){
+                setprofilePicture(e.target.files[0])
+            }else{
+                setprofilePicture({})
+            }
+        }
     }
+
 
     const inputValidation = ()=>{
 
         const {error} = Joi.object({
+            profilePicture: Joi.object({}).required(),
             username: Joi.string().min(3).required()
-        }).validate({username})
+        }).validate({username, profilePicture})
         if(error) {
             seterror(error);
             setdisplayError('block')
@@ -85,7 +95,7 @@ const Register = () =>{
 
             const data = {
                 eventName: "register",
-                data:{username, moNumber: number, password}
+                data:{username, moNumber: number, password, profilePicture}
             }
             socket.emit('req', data )
         } 
@@ -96,6 +106,17 @@ const Register = () =>{
           <form onSubmit={formSubmitHandler}>
             <div className="error" style={{display:displayError}}>
                 {   error.message? error.message : ""}
+            </div>
+            <div className="image">
+                {
+                    profilePicture.name 
+                    ? <img src={URL.createObjectURL(profilePicture)} alt=""/>
+                    : ""
+                }
+            </div>
+            <div className="input">
+              <label htmlFor="profilePicture">Profile Picture</label>
+              <input name="profilePicture" type="file" accept="image/*" onChange={inputHandler} />
             </div>
             <div className="input">
               <label htmlFor="number">User name</label>

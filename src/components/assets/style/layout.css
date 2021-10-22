@@ -174,10 +174,6 @@
   border-radius: 50%;
 }
 
-.container .chatHistory {
-  padding: 10px;
-}
-
 .container .sendMessage {
   display: -webkit-box;
   display: -ms-flexbox;

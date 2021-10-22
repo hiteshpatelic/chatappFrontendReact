@@ -6,10 +6,10 @@ import './assets/style/layout.scss';
 import ChatHistory from './layouts/chat';
 import WelcomeChat from './layouts/welcomeChat';
 import './assets/style/chat.css';
-import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Route, Redirect } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import AddContect from './components/addContect';
+import { useSelector } from 'react-redux';
 
 const App = ()=>{
     useEffect(() => {
@@ -18,9 +18,7 @@ const App = ()=>{
         }
     }, [])
 
-    const auth = useSelector((state)=> state);
-    const {token} = auth.authReducer.auth
-    console.log(token)
+    const profile = useSelector(state => state.profileReducer.profile)
     return(
         <Fragment>
             <div className="dashboard" onLoad={() => ReactTooltip.rebuild()}>
@@ -30,8 +28,10 @@ const App = ()=>{
                     </div>
                     <div className="welcome">
                         <Route path="/chat/addContect"  component={AddContect}/>
-                        <Route path="/chat/chat/:id"  exact  component={ChatHistory}/>
-                        <Route path="/chat" exact component={WelcomeChat}/>
+                        <Route path="/chat/user/:id"  exact  component={ChatHistory}/>
+
+                        <Route path="/chat" exact component={()=><WelcomeChat name={profile.username} img={profile.profilePicture}/>}/>
+                        <Redirect from ="/chat/" to="/chat"/>   
                     </div>
                 </div>
             </div>

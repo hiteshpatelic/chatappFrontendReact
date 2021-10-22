@@ -4,7 +4,9 @@ import moment from 'moment';
 import socket from '../../socket/config';
 
 
-function WelcomeChat({backbutton}) {
+function WelcomeChat({name, img}) {
+    
+ 
     const [time, settime] = useState(moment().format("hh : mm : ss"))
     const [quote, setquote] = useState(()=>{
         const data = {
@@ -33,8 +35,9 @@ function WelcomeChat({backbutton}) {
     return (
         <div>
             <div className="container-welcome">
+               <img src={img} alt=""/>
                <h1>{time}</h1>
-               <h2>Welcome, </h2>
+               <h2>Welcome, {name} </h2>
                <p>{quote}</p>
             </div>
         </div>
