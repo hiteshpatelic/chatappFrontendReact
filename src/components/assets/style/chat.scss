@@ -27,3 +27,66 @@
         border-radius: 50%;
     }
 }
+@mixin chatItem {
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px 0;
+    width: 100%;
+}
+@mixin chatItemStyle{
+    border-radius: 10px;
+    // border: 0.5px solid $primaryColor;
+    background-color: $liteColor;
+    padding: 10px ;
+    margin: 5px 25px;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+
+.chatHistory{
+    margin: 25px;
+    max-height: 60vh;
+    .left{
+        @include chatItem();
+        align-items: flex-start;
+        p{
+            @include chatItemStyle;
+        }
+    }
+    .right{
+        @include chatItem();
+        justify-content: flex-end;
+        p{
+            @include chatItemStyle;
+        }
+    }
+}
+
+.react-css-1n7m0yu{
+    width: 100%;
+    height: 100%;
+}
+.react-css-1n7m0yu::-webkit-scrollbar-track
+{
+	box-shadow: inset 0 0 6px $liteColor;
+	background-color: rgba(141, 141, 141, 0.171);
+	border-radius: 10px;
+}
+
+.react-css-1n7m0yu::-webkit-scrollbar
+{
+	width: 7px;
+	background-color: #F5F5F5;
+}
+
+.react-css-1n7m0yu::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, $secondaryColor),
+									   color-stop(0.72, $secondaryColor),
+									   color-stop(0.86, $secondaryColor ));
+}

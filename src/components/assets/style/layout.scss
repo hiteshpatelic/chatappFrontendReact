@@ -120,9 +120,6 @@
             }
         }
     }
-    .chatHistory{
-        padding: 10px;
-    }
     .sendMessage{
         @include flex(flex-start, center);
         padding: 15px 10px 10px 10px;

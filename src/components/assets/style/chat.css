@@ -29,4 +29,77 @@
   width: 150px;
   border-radius: 50%;
 }
+
+.chatHistory {
+  margin: 25px;
+  max-height: 60vh;
+}
+
+.chatHistory .left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 0 10px 0;
+  width: 100%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.chatHistory .left p {
+  border-radius: 10px;
+  background-color: #90f7ed48;
+  padding: 10px;
+  margin: 5px 25px;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.chatHistory .right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 0 10px 0;
+  width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.chatHistory .right p {
+  border-radius: 10px;
+  background-color: #90f7ed48;
+  padding: 10px;
+  margin: 5px 25px;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.react-css-1n7m0yu {
+  width: 100%;
+  height: 100%;
+}
+
+.react-css-1n7m0yu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #90f7ed48;
+          box-shadow: inset 0 0 6px #90f7ed48;
+  background-color: rgba(141, 141, 141, 0.171);
+  border-radius: 10px;
+}
+
+.react-css-1n7m0yu::-webkit-scrollbar {
+  width: 7px;
+  background-color: #F5F5F5;
+}
+
+.react-css-1n7m0yu::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, #90F7EC), color-stop(0.72, #90F7EC), color-stop(0.86, #90F7EC));
+}
 /*# sourceMappingURL=chat.css.map */
