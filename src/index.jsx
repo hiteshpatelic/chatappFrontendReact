@@ -19,20 +19,27 @@ import socket from './socket/config';
 import { fetchUserProfile } from './redux/actions/profile';
 import Loder from './components/layouts/loder'
 import { setAuthToken } from './redux/actions/auth';
+import { useEffect } from 'react';
 
 
 
 const Root = () =>{
     
-    socket.off('res').on("res", res=>{
-        const {eventName,data} = res
-        if(eventName === "getUserProfileInfo"){
-          dispatch(fetchUserProfile(data))
-        }
-    })
     const dispatch = useDispatch();
     const profile = useSelector(state => state.profileReducer.profile)
 
+    useEffect(() => {
+        socket.on("res", res=>{
+            const {eventName,data} = res
+            if(eventName === "getUserProfileInfo"){
+              dispatch(fetchUserProfile(data))
+            }
+        })
+        return () => {
+            socket.off('res')
+        }
+    }, [dispatch])
+    
     return (
         <Fragment>
             <Router>

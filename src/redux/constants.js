@@ -9,5 +9,8 @@ export const actionTypes = {
     FETCH_USER_PROFILE : "FETCH_USER_PROFILE",
 
     // * ui
-    SET_CHAT_BY_ID: "SET_CHAT_BY_ID"
+    SET_CHAT_BY_ID: "SET_CHAT_BY_ID",
+
+    // * messages
+    SEND_MESSAGE : "SEND_MESSAGE"
 }

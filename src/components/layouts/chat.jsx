@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import Button from '../components/button';
 import IMG from '../components/img';
 import socket from '../../socket/config';
-import {setChatOnUiById} from "../../redux/actions/ui"
+import {sendNewMessage, setChatOnUiById} from "../../redux/actions/ui"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 const ChatHistory = () =>{
@@ -20,13 +20,12 @@ const ChatHistory = () =>{
     const token = localStorage.getItem('token');
     
     const getUserInfoFromContactList = useSelector(state => {
-        return state.profileReducer.profile.contactList.filter(e=>e._id === id)
+        return state.profileReducer.profile.contactList.filter(e=>e.id === id)
     })
     const {profilePicture, username, roomId} = getUserInfoFromContactList[0];
     const {payload} = useSelector(state => state.chatReducer)
     const userID = useSelector(state => state.profileReducer.profile._id)
     
-    console.log(payload);
     if(!payload || (payload && payload._id !== roomId) ){
         const data = {
             eventName: "getChatHistotyById",
@@ -36,33 +35,42 @@ const ChatHistory = () =>{
         socket.emit('req', data )
     }
     
-    socket.off('res').on("res", res=>{
-        const {eventName,data} = res
-        if(eventName === "getChatHistotyById"){
-            dispatch(setChatOnUiById(data))
-        //   history.push("/chat")
+    
+    useEffect(() => {
+        socket.on("res", res=>{
+            console.log(res);
+            const {eventName,data} = res
+            if(eventName === "getChatHistotyById"){
+                dispatch(setChatOnUiById(data))
+            }
+            if(eventName === "newMessage"){
+                console.log(res);
+                dispatch(sendNewMessage({message: data.message, userID: data.sender}))
+            }
+        })
+        return () => {
+            socket.off('res')
         }
-    })
+    }, [dispatch])
 
+    // * message input handler 
     const inputHandler = (e)=>{
         const {name, value} = e.target
         if(name === "message") setMessage(value)
     }
+     
+    // * send Message
     const sendMessage =()=>{
-        
-        if(message.trim() === "") return;
-
+        if(message.trim() === "") return
         const data = {
             eventName: "sendMessage",
             data:{roomId, message},
             token
         }
+        dispatch(sendNewMessage({message, userID}))
         socket.emit("req", data)
         setMessage("")
     }
-
-
-
 
     const back  = (<i className="fas fa-chevron-left"></i>)
     const menu = (<i className="fas fa-bars"></i>)
