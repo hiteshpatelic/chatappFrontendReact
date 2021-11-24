@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
@@ -7,12 +7,11 @@ import { useDispatch } from "react-redux";
 import Button from '../components/button';
 import IMG from '../components/img';
 import socket from '../../socket/config';
-import {setChatOnUiById} from "../../redux/actions/ui"
+import {sendNewMessage, setChatHistoryOpenFalse, setChatOnUiById} from "../../redux/actions/ui"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 const ChatHistory = () =>{
 
-    
     const history = useHistory()
     const dispatch = useDispatch();
     const [message, setMessage] = useState("")
@@ -20,13 +19,12 @@ const ChatHistory = () =>{
     const token = localStorage.getItem('token');
     
     const getUserInfoFromContactList = useSelector(state => {
-        return state.profileReducer.profile.contactList.filter(e=>e._id === id)
+        return state.profileReducer.profile.contactList.filter(e=>e.id === id)
     })
-    const {profilePicture, username, roomId} = getUserInfoFromContactList[0];
+    const {profilePicture, username, roomId, number} = getUserInfoFromContactList[0];
     const {payload} = useSelector(state => state.chatReducer)
     const userID = useSelector(state => state.profileReducer.profile._id)
     
-    console.log(payload);
     if(!payload || (payload && payload._id !== roomId) ){
         const data = {
             eventName: "getChatHistotyById",
@@ -36,33 +34,40 @@ const ChatHistory = () =>{
         socket.emit('req', data )
     }
     
-    socket.off('res').on("res", res=>{
-        const {eventName,data} = res
-        if(eventName === "getChatHistotyById"){
-            dispatch(setChatOnUiById(data))
-        //   history.push("/chat")
+    useEffect(() => {
+        socket.on("res", res=>{
+            const {eventName,data} = res
+            if(eventName === "getChatHistotyById"){
+                dispatch(setChatOnUiById(data))
+            }
+            if(eventName === "newMessage"){
+                dispatch(sendNewMessage({message: data.messageFormate.message, userID: data.messageFormate.sender}))
+            }
+        })
+        return () => {
+            socket.off('res')
         }
-    })
+    }, [dispatch])
 
+    // * message input handler 
     const inputHandler = (e)=>{
         const {name, value} = e.target
         if(name === "message") setMessage(value)
     }
-    const sendMessage =()=>{
-        
-        if(message.trim() === "") return;
-
+     
+    // * send Message
+    const sendMessage =(e)=>{
+        e.preventDefault()
+        if(message.trim() === "") return
         const data = {
             eventName: "sendMessage",
             data:{roomId, message},
             token
         }
+        dispatch(sendNewMessage({message, userID}))
         socket.emit("req", data)
         setMessage("")
     }
-
-
-
 
     const back  = (<i className="fas fa-chevron-left"></i>)
     const menu = (<i className="fas fa-bars"></i>)
@@ -71,12 +76,12 @@ const ChatHistory = () =>{
         <div className="container">
             <div className="top">
                 <div className="left">
-                    <div className="back-btn" onClick={()=> history.push(`/chat`)}>
+                    <div className="back-btn" onClick={()=> {dispatch(setChatHistoryOpenFalse(id)); history.push(`/chat`)}}>
                         <Button text={back}  />
                     </div>
                     <IMG link={profilePicture}></IMG>
                     <div className="profileinfo">
-                        <h3>{username}</h3>
+                        <h3>{username === "unKnown"? number : username}</h3>
                     </div>
                 </div>
                 <div className="option">
@@ -95,10 +100,10 @@ const ChatHistory = () =>{
                     :"":""
                 }
             </ScrollToBottom>
-            <div className="sendMessage">
+            <form onSubmit={sendMessage} className="sendMessage">
                 <input name="message" value={message}  onChange={inputHandler} placeholder="Enter your message.........."/> 
-                <Button onClick={sendMessage} text={send}/>
-            </div>
+                <Button type="submit" text={send}/>
+            </form>
         </div>
     );
 }

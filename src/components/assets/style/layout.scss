@@ -27,10 +27,26 @@
         padding: 10px 20px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin-bottom: 5px;
         cursor: pointer;
         transition: 0.2s;
         border-bottom: 0.2px solid rgba(128, 128, 128, 0.274);
+        .imageWithName{
+            display: flex;
+            align-items: center;
+            width: 85%;
+        }
+        .notification{
+            background-color: $primaryColor;
+            border-radius: 50%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            height: 22px;
+            width: 22px;
+        }
         img{
             height: 40px;
             width: 40px;

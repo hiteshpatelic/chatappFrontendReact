@@ -3,7 +3,7 @@ import passwordComplexity  from "joi-password-complexity";
 import Button from "../../components/button";
 import Joi from "joi";
 import socket from "../../../socket/config"
-import { errorToster, successToster } from "../../layouts/toster";
+import { errorToster, infoToster, successToster } from "../../layouts/toster";
 import { useHistory } from "react-router-dom";
 
 
@@ -20,6 +20,7 @@ const Register = () =>{
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
+
         if(eventName === "register"){
             if(data.error){
                 errorToster(data.message)
@@ -27,13 +28,11 @@ const Register = () =>{
             if(!data.error){
                 successToster(data.message)
                 history.push(`/home/register/verify/${data.token}`)
-                // history.push({
-                //     pathname: '/home/register/verify/',
-                //     search: `?number=${number}&token=${data.token}`,
-                //     state: { detail: 'some_value' }
-                // });
-                // history.push('/home/register/verify')
             }
+        }
+        if(eventName === "otp"){
+            infoToster(data.msg) 
+            history.push(`/home/register/verify/${data.token}`)
         }
     })
     

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {  useHistory } from "react-router-dom";
 import socket from "../../../socket/config";
 import Button from "../../components/button";
-import { errorToster, successToster } from "../../layouts/toster";
+import { errorToster, infoToster, successToster } from "../../layouts/toster";
 
 
 const ResendVerifyOTP = () =>{
@@ -44,7 +44,8 @@ const ResendVerifyOTP = () =>{
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
-        console.log(eventName,data);
+        console.log(res);
+
         if(eventName === "resendRegisterVerifiedOTP"){
             if(data.error){
                 errorToster(data.message)
@@ -53,6 +54,10 @@ const ResendVerifyOTP = () =>{
                 successToster(data.message)
                 history.push(`/home/register/verify/${data.token}`)
             }
+        }
+        if(eventName === "otp"){
+            infoToster(data.msg ) 
+            history.push(`/home/register/verify/${data.token}`)
         }
     })
 
