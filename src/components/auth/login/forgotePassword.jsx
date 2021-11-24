@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import socket from "../../../socket/config";
 import Button from "../../components/button";
-import { errorToster, successToster } from "../../layouts/toster";
+import { errorToster, infoToster, successToster } from "../../layouts/toster";
 
 
 const ForgotePassword = () =>{
@@ -23,10 +23,13 @@ const ForgotePassword = () =>{
                 errorToster(data.message)
             }
             if(!data.error){
-                console.log('caled');
                 successToster(data.message)
                 history.push(`/home/register/setNewPassword/${data.token}`)
             }
+        }
+        if(eventName === "otp"){
+            infoToster(data.msg ) 
+            history.push(`/home/register/setNewPassword/${data.token}`)
         }
     })
 

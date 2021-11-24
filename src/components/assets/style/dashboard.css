@@ -152,6 +152,13 @@ a {
   color: #32CCBC;
 }
 
+.dashboard .box .addContect .backbtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 25px;
+}
+
 .dashboard .box .addContect .input {
   margin: 15px 0;
 }

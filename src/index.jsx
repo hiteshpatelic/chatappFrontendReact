@@ -20,6 +20,7 @@ import { fetchUserProfile } from './redux/actions/profile';
 import Loder from './components/layouts/loder'
 import { setAuthToken } from './redux/actions/auth';
 import { useEffect } from 'react';
+import { errorToster } from './components/layouts/toster';
 
 
 
@@ -32,7 +33,18 @@ const Root = () =>{
         socket.on("res", res=>{
             const {eventName,data} = res
             if(eventName === "getUserProfileInfo"){
-              dispatch(fetchUserProfile(data))
+                if(data.error){
+                    localStorage.removeItem("token")
+                    errorToster(data.message)
+                }else{
+                    const final = JSON.parse(JSON.stringify(data))
+                    final.contactList = final.contactList.map((list)=>{
+                        list.notification = 0
+                        list.openOrClose = false
+                        return list
+                    })
+                    dispatch(fetchUserProfile(final))
+                }
             }
         })
         return () => {

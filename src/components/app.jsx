@@ -6,17 +6,19 @@ import './assets/style/layout.scss';
 import ChatHistory from './layouts/chat';
 import WelcomeChat from './layouts/welcomeChat';
 import './assets/style/chat.css';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import AddContect from './components/addContect';
 import { useSelector } from 'react-redux';
 
 const App = ()=>{
     useEffect(() => {
+
         return () => {
             ReactTooltip.hide()
         }
     }, [])
+
 
     const profile = useSelector(state => state.profileReducer.profile)
     return(
@@ -29,13 +31,12 @@ const App = ()=>{
                     <div className="welcome">
                         <Route path="/chat/addContect"  component={AddContect}/>
                         <Route path="/chat/user/:id"  exact  component={ChatHistory}/>
-
                         <Route path="/chat" exact component={()=><WelcomeChat name={profile.username} img={profile.profilePicture}/>}/>
-                        <Redirect from ="/chat/" to="/chat"/>   
+                        {/* <Redirect from ="/chat/" to="/chat"/>    */}
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </Fragment> 
     );
 }
 

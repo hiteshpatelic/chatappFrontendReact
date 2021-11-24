@@ -41,7 +41,14 @@ const Login = () => {
       socket.off('res').on("res", res=>{
         const {eventName,data} = res
         if(eventName === "getUserProfileInfo"){
-          dispatch(fetchUserProfile(data))
+          const final = JSON.parse(JSON.stringify(data))
+          final.contactList = final.contactList.map((list)=>{
+              list.notification = 0
+              list.openOrClose = false
+              return list
+          })
+          console.log(final);
+          dispatch(fetchUserProfile(final))
           history.push("/chat")
         }
       })
