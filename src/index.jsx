@@ -23,7 +23,6 @@ import { useEffect } from 'react';
 import { errorToster } from './components/layouts/toster';
 
 
-
 const Root = () =>{
     
     const dispatch = useDispatch();
@@ -36,6 +35,9 @@ const Root = () =>{
                 if(data.error){
                     localStorage.removeItem("token")
                     errorToster(data.message)
+                    setTimeout(()=>{
+                        return window.location.href = '/home/login'
+                    },1000)
                 }else{
                     const final = JSON.parse(JSON.stringify(data))
                     final.contactList = final.contactList.map((list)=>{

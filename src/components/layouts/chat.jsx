@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import Button from '../components/button';
 import IMG from '../components/img';
 import socket from '../../socket/config';
-import {sendNewMessage, setChatHistoryOpenFalse, setChatOnUiById} from "../../redux/actions/ui"
+import {sendNewMessage, setChatHistoryOpenFalse, setChatOnUiById, setNotification} from "../../redux/actions/ui"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 const ChatHistory = () =>{
@@ -41,7 +41,8 @@ const ChatHistory = () =>{
                 dispatch(setChatOnUiById(data))
             }
             if(eventName === "newMessage"){
-                dispatch(sendNewMessage({message: data.messageFormate.message, userID: data.messageFormate.sender}))
+                dispatch(setNotification(data))
+                dispatch(sendNewMessage(data))
             }
         })
         return () => {
@@ -64,7 +65,12 @@ const ChatHistory = () =>{
             data:{roomId, message},
             token
         }
-        dispatch(sendNewMessage({message, userID}))
+        const msgObject = {
+            messageFormate:{
+                message,roomId, sender:userID 
+            }
+        }
+        dispatch(sendNewMessage(msgObject))
         socket.emit("req", data)
         setMessage("")
     }

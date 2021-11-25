@@ -52,13 +52,11 @@ const SetNewPassword = () =>{
                 token
             }
             socket.emit("req", data)
-            console.log('emited');
         }
     }
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
-        console.log(eventName,data);
         if(eventName === "setNewPassword"){
             if(data.error){
                 errorToster(data.message)

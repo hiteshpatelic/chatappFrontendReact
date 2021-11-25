@@ -38,13 +38,11 @@ const ResendVerifyOTP = () =>{
                 data:{number}
             }
             socket.emit("req", data)
-            console.log('emited');
         }
     }
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
-        console.log(res);
 
         if(eventName === "resendRegisterVerifiedOTP"){
             if(data.error){

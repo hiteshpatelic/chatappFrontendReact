@@ -47,7 +47,6 @@ const VerifyRegisterUser = () =>{
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
-        console.log(eventName,data);
         if(eventName === "verifyRegisterWithOTP"){
             if(data.error){
                 errorToster(data.message)

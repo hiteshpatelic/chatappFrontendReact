@@ -27,7 +27,7 @@ function WelcomeChat({name, img}) {
             }
             if(eventName === "newMessage"){
                 dispatch(setNotification(data))
-                dispatch(sendNewMessage({message: data.messageFormate.message, userID: data.messageFormate.sender}))
+                dispatch(sendNewMessage({message: data.messageFormate.message, _id: data.messageFormate._id,userID: data.messageFormate.sender}))
             }
         })
         const timer = setTimeout(()=>{

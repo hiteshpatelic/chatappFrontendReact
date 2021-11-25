@@ -4,12 +4,17 @@ const initialState = {
 } 
 
 const addnewMessage = (state, payload)=>{
+
     const newStateWithNewMessage = JSON.parse(JSON.stringify(state))
-    if(newStateWithNewMessage.payload)
-    newStateWithNewMessage.payload.room.messages.push({
-        sender: payload.userID,
-        message : payload.message
-    })
+    if(newStateWithNewMessage.payload){
+        if(payload.messageFormate.roomId === newStateWithNewMessage.payload._id){
+
+            delete payload.messageFormate.roomId
+            newStateWithNewMessage.payload.room.messages.push({
+                ...payload.messageFormate
+            });
+        }
+    }
     return newStateWithNewMessage
 }
 
