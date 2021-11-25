@@ -25,7 +25,7 @@ const setChatHistory = (state,payload, condition)=>{
 const pushnotification = (state, payload)=>{
     const newState = JSON.parse(JSON.stringify(state))
     newState.profile.contactList = newState.profile.contactList.map((userList)=>{
-        if(userList.id === payload.messageFormate.sender){
+        if(userList.roomId === payload.messageFormate.roomId){
             if(userList.openOrClose === false){
                 userList.notification = userList.notification +1
             }
@@ -36,7 +36,17 @@ const pushnotification = (state, payload)=>{
 }
 const addNewContect = (state, payload)=>{
     const newState = JSON.parse(JSON.stringify(state))
-    newState.profile.contactList.push(payload)
+    let verify
+    newState.profile.contactList.forEach(numberList => {
+        if(numberList.id === payload.id){
+            numberList.username = payload.username
+            verify = false
+        }else{
+            verify = true
+        }
+        return numberList
+    }); 
+    if(verify)newState.profile.contactList.push(payload);
     return newState
 }
 

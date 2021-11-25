@@ -16,7 +16,6 @@ const ForgotePassword = () =>{
 
     socket.off("res").on('res', res=>{
         const {eventName,data} = res
-        console.log(eventName,data,123);
 
         if(eventName === "resetPassword"){
             if(data.error){

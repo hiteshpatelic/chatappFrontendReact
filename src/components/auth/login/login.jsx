@@ -47,7 +47,6 @@ const Login = () => {
               list.openOrClose = false
               return list
           })
-          console.log(final);
           dispatch(fetchUserProfile(final))
           history.push("/chat")
         }
